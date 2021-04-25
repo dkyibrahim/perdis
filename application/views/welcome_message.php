@@ -610,6 +610,13 @@
                         <div class="row clearfix">
                             <div class="col-lg-12 col-md-12 col-sm-12  m-b-10">                               
                                 
+                                <div class="form-group">
+                            		<label class="label label-control"><b>Tanggal SPT</b></label>
+                            		<div class="input-group">
+	                                    <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
+	                                    <input type="date" class="form-control date" name="dari" value="<?php echo date('Y-m-d'); ?>" placeholder="Ex: 30/07/2016">
+	                                </div>
+                            	</div>
                             	<div class="form-group">
                             		<label class="label label-control"><b>Penandatangan</b></label>
                             		<select class="form-control" id="jenis_perjalanan">
@@ -620,14 +627,71 @@
                             	</div>
                             	<div class="form-group">
                             		<label class="label label-control"><b>Dasar SPT</b></label>
-                            		<input type="text" class="form-control" name="dasar_spt" >
+                            		<textarea class="form-control" name="dasar_spt" placeholder="Dasar SPT"></textarea>
+                            	</div>
+                            	<div class="row">
+                            		<div class="col-md-6">
+                            			<div class="form-group">
+		                            		<label class="label label-control"><b>Dari Tanggal</b></label>
+		                            		<div class="input-group">
+			                                    <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
+			                                    <input type="date" class="form-control date" name="dari" value="<?php echo date('Y-m-d'); ?>" placeholder="Ex: 30/07/2016">
+			                                </div>
+		                            	</div>
+                            		</div>
+                            		<div class="col-md-6">
+                            			<div class="form-group">
+		                            		<label class="label label-control"><b>Ke Tanggal</b></label>
+		                            		<div class="input-group">
+			                                    <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
+			                                    <input type="date" class="form-control date" name="ke" value="<?php echo date('Y-m-d'); ?>" placeholder="Ex: 30/07/2016">
+			                                </div>
+		                            	</div>
+                            		</div>
+                            	</div>
+
+                            	
+                            	<div class="form-group">
+                            		<label class="label label-control"><b>Maksud Perjalanan</b></label>
+                            		<textarea class="form-control" name="maksud" placeholder="Maksud Perjalanan"></textarea>
                             	</div>	
                             	<div class="form-group">
-                            		<label class="label label-control"><b>Dari Tanggal</b></label>
-                            		<div class="input-group">
-	                                    <span class="input-group-addon"><i class="zmdi zmdi-calendar"></i> </span>
-	                                    <input type="text" class="form-control date" placeholder="Ex: 30/07/2016">
-	                                </div>
+                            		<label class="label label-control"><b>Lokasi Perjalanan</b></label>
+                            		<select class="form-control" name="lokasi" id="lokasi">
+                            			<option value="kota">Kota Gorontalo</option>
+                            			<option value="provinsi">Provinsi Gorontalo</option>
+                            			<option value="bone">Bone Bolango</option>
+                            		</select>
+                            	</div>
+
+
+                            	<div class="form-group">
+                            		<label class="label label-control"><b>Jumlah</b></label>
+                            		<input type="number" id="jumlah_pelaksana" name="jumlah_pelaksana" class="form-control" min="1" value="1">
+                            	</div>	
+
+                            	<div id="rinci_pelaksana_spt">
+                            		<div class="row">
+                            			<div class="col-md-6">
+                            				<div class="form-group">
+                            					<label class="label label-control"><b>Pegawai</b></label>
+                            					<select class="form-control" name="pegawai">
+                            						<?php foreach( $pegawai as $k =>  $v ){ ?>
+                            							<option value="<?php echo $v->idpegawai; ?>"><?php echo $v->nama; ?></option>
+                            						<?php } ?>
+                            					</select>
+                            				</div>
+                            			</div>
+                            			<div class="col-md-6">
+                            				<div class="form-group">
+                            					<br><br>
+				                                <div class="checkbox">
+				                                    <input id="checkbox" type="checkbox">
+				                                    <label for="checkbox">Supir (Melayani)</label>
+				                                </div>
+				                            </div>
+                            			</div>
+                            		</div>
                             	</div>
                             	
                             	
@@ -727,11 +791,11 @@
         //when clicked on mobile-menu, normal menu is shown as a list, classic rwd menu story (thanks mwl from stackoverflow)
 
 
-        $("#jumlahpelaksananspt").change(function(){
+        $("#jumlah_pelaksana").change(function(){
 
         	var jumlah = $(this).val();
-        	$.get("<?php echo site_url('welcome/hitung_spt/'); ?>"+jumlah,function(o){
-        		$("#divpelakasanaspt").html(o);
+        	$.get("<?php echo site_url('welcome/pelaksana_spt/'); ?>"+jumlah,function(o){
+        		$("#rinci_pelaksana_spt").html(o);
         	});
 
         });

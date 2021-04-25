@@ -23,6 +23,7 @@ class Welcome extends CI_Controller {
 		$data['penandatanganan'] = $this->db->get("penandatanganan")->result();
 		$data['jenisperjalanan'] = $this->db->get("jenis_perjalanan")->result();
 		$data['tingkatan'] = $this->db->get("tingkatan")->result();	
+		$data['pegawai'] = $this->db->get("pegawai")->result();	
 		$data['a'] = $this->db->get_where("tingkatan",array("ket"=>"kdh_wkdh"))->row();	
 		$data['b'] = $this->db->get_where("tingkatan",array("ket"=>"pejabat_daerah"))->row();	
 		$data['c'] = $this->db->get_where("tingkatan",array("ket"=>"eselon2"))->row();	
@@ -31,6 +32,23 @@ class Welcome extends CI_Controller {
 		$data['f'] = $this->db->get_where("tingkatan",array("ket"=>"noneselon"))->row();	
 		$data['g'] = $this->db->get_where("tingkatan",array("ket"=>"nonpns"))->row();	
 		$this->load->view('welcome_message',$data);
+	}
+
+	function pelaksana_spt($jumlah)
+	{
+
+		if( $jumlah <= 0  ){
+			$jumlah = 1;
+		}
+		$pegawai = $this->db->get("pegawai")->result();	
+		for( $i = 0 ; $i < $jumlah ; $i++ ){
+			echo "<div class='row'><div class='col-md-6'><div class='form-group'><label class='label label-control'><b>Pegawai</b></label><select class='form-control' name='pegawai'>";
+			foreach( $pegawai as $k =>  $v ){
+				echo "<option value='".$v->idpegawai."'>".$v->nama."</option>";
+			}
+            echo "</select></div></div><div class='col-md-6'><div class='form-group'><br><br><div class='checkbox'><input id='checkbox' type='checkbox'><label for='checkbox'>Supir (Melayani)</label></div></div></div></div>";
+		}
+
 	}
 
 	function hitung_spt($jumlah)
